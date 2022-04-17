@@ -1,7 +1,7 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
     <ion-title>
-      Tab 1
+      {{title}}
     </ion-title>
   </ion-toolbar>
 </ion-header>
@@ -9,9 +9,36 @@
 <ion-content [fullscreen]="true">
   <ion-header collapse="condense">
     <ion-toolbar>
-      <ion-title size="large">Tab 1</ion-title>
+      <ion-title size="large">Grocery List</ion-title>
     </ion-toolbar>
   </ion-header>
 
-  <app-explore-container name="Tab 1 page"></app-explore-container>
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+    <ion-fab-button (click)="addItem()">
+      <ion-icon name="add">
+      </ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+
+  <h3 class="ion-text-center" *ngIf="groceries.length === 0">Please add items to begin shopping</h3>
+  <ion-list>
+    <ion-item-sliding *ngFor="let grocery of groceries; let i = index">
+      <ion-item>
+        <h2>{{grocery.name}} </h2>
+        <h2 style="padding-left: 20px;">{{grocery.quantity}}</h2>
+      </ion-item>
+      <ion-item-options>
+        <button ion-button (click)="editItem(grocery)" color="primary">
+          <ion-icon name="pencil"></ion-icon>
+        </button>
+        <button ion-button (click)="shareItem(grocery.name, grocery.quantity)" class="share-item" color="light">
+          <ion-icon name="share"></ion-icon>
+        </button>
+        <button ion-button (click)="removeItem(grocery)" class="checkmark-done" color="primary">
+          <ion-icon name="trash"></ion-icon>
+        </button>
+      </ion-item-options>
+    </ion-item-sliding>
+  </ion-list>
+
 </ion-content>
